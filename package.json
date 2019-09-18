@@ -1,0 +1,32 @@
+{
+  "name": "leaflet-gbfs",
+  "version": "1.0.0",
+  "description": "Show gbfs data in Leaflet",
+  "main": "src/L.GBFS.js",
+  "directories": {
+    "example": "examples",
+    "dist": "dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stadtulm/leaflet-gbfs.git"
+  },
+  "scripts": {
+    "build": "parcel build src/L.GBFS.js --global L.GBFS"
+  },
+  "keywords": [
+    "leaflet",
+    "GBFS"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stadtulm/leaflet-gbfs/issues"
+  },
+  "homepage": "https://github.com/stadtulm/leaflet-gbfs",
+  "devDependencies": {
+    "leaflet": "^1.5.1",
+    "parcel-bundler": "^1.12.3"
+  },
+  "dependencies": {},
+  "browserslist": ["last 1 Chrome versions"]
+}
