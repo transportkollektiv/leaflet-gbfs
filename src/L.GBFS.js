@@ -62,6 +62,7 @@ L.GBFS = L.Layer.extend({
                         let marker = new L.Marker(point, {
                             icon: icon
                         });
+                        marker.bindPopup(`<b>${station.name}</b><br>Available bikes: <b>${status.num_bikes_available}</b>`)
                         marker.addTo(this.container)
                     }
                 })
@@ -103,7 +104,6 @@ L.GBFS = L.Layer.extend({
 			cssClass += " bike-icon-empty"
 		}
 		let degree = bikes/(bikes+docks) * 360
-		//degree = 270
 		let ringCss = `
 		background: ${this.options.bikeMarkerColor};
 		background-image:
