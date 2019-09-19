@@ -3,7 +3,9 @@ L.GBFS = L.Layer.extend({
         gbfsURL: '',
         start: true,
         interval: 60 * 1000,
-        onlyRunWhenAdded: false
+        onlyRunWhenAdded: false,
+        bikeMarkerColor: "rgb(87, 162, 255)",
+        bikeMarkerBgColor: "white"
     },
 
     initialize: function(options) {
@@ -103,17 +105,17 @@ L.GBFS = L.Layer.extend({
 		let degree = bikes/(bikes+docks) * 360
 		//degree = 270
 		let ringCss = `
-		background: ${this.bikeMarkerColor};
+		background: ${this.options.bikeMarkerColor};
 		background-image:
-			linear-gradient(${90+degree}deg, transparent 50%, ${this.bikeMarkerBgColor} 50%),
-			linear-gradient(90deg, ${this.bikeMarkerBgColor} 50%, transparent 50%);
+			linear-gradient(${90+degree}deg, transparent 50%, ${this.options.bikeMarkerBgColor} 50%),
+			linear-gradient(90deg, ${this.options.bikeMarkerBgColor} 50%, transparent 50%);
 		`
 		if (degree > 180) {
 			ringCss = `
-			background: ${this.bikeMarkerColor};
+			background: ${this.options.bikeMarkerColor};
 			background-image:
-				linear-gradient(${degree-90}deg, transparent 50%, ${this.bikeMarkerColor} 50%),
-				linear-gradient(90deg, ${this.bikeMarkerBgColor} 50%, transparent 50%);
+				linear-gradient(${degree-90}deg, transparent 50%, ${this.options.bikeMarkerColor} 50%),
+				linear-gradient(90deg, ${this.options.bikeMarkerBgColor} 50%, transparent 50%);
 			`
 		}
 		return `
