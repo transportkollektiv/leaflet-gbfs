@@ -58,12 +58,13 @@ L.GBFS = L.Layer.extend({
               bgPos: [13, 13],
               iconSize: [26, 26],
               popupAnchor: [0, -17],
-              className: 'bike-icon',
+              className: 'station-icon',
             });
             const point = L.latLng(station.lat, station.lon);
             const marker = new L.Marker(point, {
               icon,
             });
+            marker.bindPopup(`<b>${station.name}</b><br>Available bikes: <b>${status.num_bikes_available}</b>`);
             marker.addTo(this.container);
           }
         });
@@ -100,12 +101,11 @@ L.GBFS = L.Layer.extend({
   },
 
   getStationIconHtml(bikes, docks) {
-    let cssClass = 'bike-icon-inner';
+    let cssClass = 'station-icon-inner';
     if (bikes === 0) {
-      cssClass += ' bike-icon-empty';
+      cssClass += ' station-icon-empty';
     }
     const degree = (bikes / (bikes + docks)) * 360;
-    // degree = 270
     let ringCss = `
       background: ${this.options.bikeMarkerColor};
       background-image:
@@ -122,7 +122,7 @@ L.GBFS = L.Layer.extend({
       `;
     }
     return `
-      <div class="bike-icon-ring" style="${ringCss}">
+      <div class="station-icon-ring" style="${ringCss}">
         <div class="${cssClass}">${bikes}</div>
       </div>
     `;
