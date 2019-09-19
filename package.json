@@ -12,6 +12,7 @@
     "url": "git://github.com/stadtulm/leaflet-gbfs.git"
   },
   "scripts": {
+    "dev": "parcel watch src/L.GBFS.js --global L.GBFS --public-url .",
     "build": "parcel build src/L.GBFS.js --global L.GBFS --public-url .",
     "lint": "./node_modules/.bin/eslint --ignore-path .gitignore ."
   },
