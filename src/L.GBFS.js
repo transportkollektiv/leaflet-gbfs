@@ -39,24 +39,31 @@ L.GBFS = L.Layer.extend({
     
     async update() {
         try {
-            const response = await fetch(`${this.options.gbfsURL}station_information.json`);
-            const stations = await response.json();
+            const stationInformationResponse = await fetch(`${this.options.gbfsURL}station_information.json`);
+            const stations = await stationInformationResponse.json();
+            const stationStatusResponse = await fetch(`${this.options.gbfsURL}station_status.json`);
+            const stationStatus = await stationStatusResponse.json();
 
             this.container.clearLayers();
-            this.container.addData({
-                type: 'FeatureCollection',
-                features: stations.data.stations.map(station => ({
-                    type: 'Feature',
-                    properties: {...station},
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [
-                            station.lon,
-                            station.lat
-                        ]
+
+            stations.data.stations.forEach((station) => {
+                stationStatus.data.stations.forEach(status => {
+                    if ((status.station_id == station.station_id) && status.is_installed) {
+                        let icon = new L.DivIcon({
+                            html: this.getStationIconHtml(status.num_bikes_available, station.num_docks_available),
+                            bgPos: [13, 13],
+                            iconSize: [26, 26],
+                            popupAnchor: [0, -17],
+                            className: "bike-icon"
+                        });
+                        let point = L.latLng(station.lat, station.lon);
+                        let marker = new L.Marker(point, {
+                            icon: icon
+                        });
+                        marker.addTo(this.container)
                     }
-                }))
-            });
+                })
+            })
         } catch(err) {
             console.warn(err);
             this.fire('error', { error: err });
@@ -86,7 +93,35 @@ L.GBFS = L.Layer.extend({
         }
         
         map.removeLayer(this.container);
-    }
+    },
+
+    getStationIconHtml(bikes, docks) {
+		let cssClass = "bike-icon-inner"
+		if (bikes == 0) {
+			cssClass += " bike-icon-empty"
+		}
+		let degree = bikes/(bikes+docks) * 360
+		//degree = 270
+		let ringCss = `
+		background: ${this.bikeMarkerColor};
+		background-image:
+			linear-gradient(${90+degree}deg, transparent 50%, ${this.bikeMarkerBgColor} 50%),
+			linear-gradient(90deg, ${this.bikeMarkerBgColor} 50%, transparent 50%);
+		`
+		if (degree > 180) {
+			ringCss = `
+			background: ${this.bikeMarkerColor};
+			background-image:
+				linear-gradient(${degree-90}deg, transparent 50%, ${this.bikeMarkerColor} 50%),
+				linear-gradient(90deg, ${this.bikeMarkerBgColor} 50%, transparent 50%);
+			`
+		}
+		return `
+		<div class="bike-icon-ring" style="${ringCss}">
+			<div class="${cssClass}">${bikes}</div>
+		</div>
+		`
+	}
 });
 
 module.exports = L.GBFS;
