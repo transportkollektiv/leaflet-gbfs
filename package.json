@@ -12,7 +12,8 @@
     "url": "git://github.com/stadtulm/leaflet-gbfs.git"
   },
   "scripts": {
-    "build": "parcel build src/L.GBFS.js --global L.GBFS --public-url ."
+    "build": "parcel build src/L.GBFS.js --global L.GBFS --public-url .",
+    "lint": "./node_modules/.bin/eslint --ignore-path .gitignore ."
   },
   "keywords": [
     "leaflet",
@@ -24,10 +25,21 @@
   },
   "homepage": "https://github.com/stadtulm/leaflet-gbfs",
   "devDependencies": {
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "leaflet": "^1.5.1",
-    "parcel-bundler": "^1.12.3"
+    "lint-staged": "^9.2.5",
+    "parcel-bundler": "^1.12.3",
+    "yorkie": "^2.0.0"
   },
   "dependencies": {},
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": "eslint"
+  },
   "browserslist": [
     "last 1 Chrome versions"
   ]
