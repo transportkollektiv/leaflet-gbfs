@@ -50,7 +50,7 @@ L.GBFS = L.Layer.extend({
                 stationStatus.data.stations.forEach(status => {
                     if ((status.station_id == station.station_id) && status.is_installed) {
                         let icon = new L.DivIcon({
-                            html: this.getStationIconHtml(status.num_bikes_available, station.num_docks_available),
+                            html: this.getStationIconHtml(status.num_bikes_available, status.num_docks_available),
                             bgPos: [13, 13],
                             iconSize: [26, 26],
                             popupAnchor: [0, -17],
