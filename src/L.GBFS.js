@@ -58,7 +58,7 @@ L.GBFS = L.Layer.extend({
                             bgPos: [13, 13],
                             iconSize: [26, 26],
                             popupAnchor: [0, -17],
-                            className: "bike-icon"
+                            className: "station-icon"
                         });
                         let point = L.latLng(station.lat, station.lon);
                         let marker = new L.Marker(point, {
@@ -101,9 +101,9 @@ L.GBFS = L.Layer.extend({
     },
 
     getStationIconHtml(bikes, docks) {
-		let cssClass = "bike-icon-inner"
+		let cssClass = "station-icon-inner"
 		if (bikes == 0) {
-			cssClass += " bike-icon-empty"
+			cssClass += " station-icon-empty"
 		}
 		let degree = bikes/(bikes+docks) * 360
 		let ringCss = `
@@ -121,7 +121,7 @@ L.GBFS = L.Layer.extend({
 			`
 		}
 		return `
-		<div class="bike-icon-ring" style="${ringCss}">
+		<div class="station-icon-ring" style="${ringCss}">
 			<div class="${cssClass}">${bikes}</div>
 		</div>
 		`
