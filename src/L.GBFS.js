@@ -1,3 +1,5 @@
+import './L.GBFS.css';
+
 L.GBFS = L.Layer.extend({
     options: {
         gbfsURL: '',
