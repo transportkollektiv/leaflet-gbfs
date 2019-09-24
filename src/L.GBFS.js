@@ -48,6 +48,9 @@ L.GBFS = L.Layer.extend({
       const stationStatusResponse = await fetch(`${this.options.gbfsURL}station_status.json`);
       const stationStatus = await stationStatusResponse.json();
 
+      const freeBikeStatusResponse = await fetch(`${this.options.gbfsURL}free_bike_status.json`);
+      const freeBikeStatus = await freeBikeStatusResponse.json();
+
       this.container.clearLayers();
 
       stations.data.stations.forEach((station) => {
@@ -68,6 +71,12 @@ L.GBFS = L.Layer.extend({
             marker.addTo(this.container);
           }
         });
+      });
+
+      freeBikeStatus.data.bikes.forEach((bike) => {
+        const point = L.latLng(bike.lat, bike.lon);
+        const marker = new L.Marker(point, {});
+        marker.addTo(this.container);
       });
     } catch (err) {
       console.warn(err);
