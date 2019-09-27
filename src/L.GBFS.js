@@ -1,8 +1,9 @@
-import './L.GBFS.css';
+// import './L.GBFS.css';
 
 L.GBFS = L.Layer.extend({
   options: {
     gbfsURL: '',
+    language: 'en',
     start: true,
     interval: 60 * 1000,
     onlyRunWhenAdded: false,
@@ -19,7 +20,20 @@ L.GBFS = L.Layer.extend({
     }
   },
 
-  start() {
+  async start() {
+    const gbfsResponse = await fetch(this.options.gbfsURL);
+    const gbfs = await gbfsResponse.json();
+    if (!gbfs.data.hasOwnProperty(this.options.language)) {
+      throw new Error('defined language (' + this.options.language + ') missing in gbfs file');
+    }
+
+    let feeds = gbfs.data[this.options.language].feeds;
+    let stationInformation = feeds.find((el) => el.name === "station_information");
+    let stationStatus = feeds.find((el) => el.name === "station_status");
+    let freeBikeStatus = feeds.find((el) => el.name === "free_bike_status");
+
+    this.feeds = {stationInformation, stationStatus, freeBikeStatus};
+
     if (!this.timer) {
       this.timer = setInterval(() => this.update(), this.options.interval);
       this.update();
@@ -43,12 +57,11 @@ L.GBFS = L.Layer.extend({
 
   async update() {
     try {
-      const stationInformationResponse = await fetch(`${this.options.gbfsURL}station_information.json`);
+      const stationInformationResponse = await fetch(this.feeds.stationInformation.url);
       const stations = await stationInformationResponse.json();
-      const stationStatusResponse = await fetch(`${this.options.gbfsURL}station_status.json`);
+      const stationStatusResponse = await fetch(this.feeds.stationStatus.url);
       const stationStatus = await stationStatusResponse.json();
-
-      const freeBikeStatusResponse = await fetch(`${this.options.gbfsURL}free_bike_status.json`);
+      const freeBikeStatusResponse = await fetch(this.feeds.freeBikeStatus.url);
       const freeBikeStatus = await freeBikeStatusResponse.json();
 
       this.container.clearLayers();
