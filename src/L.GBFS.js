@@ -1,5 +1,7 @@
 import './L.GBFS.css';
 
+const iconUrl = require('./images/bike_icon.png');
+
 L.GBFS = L.Layer.extend({
   options: {
     gbfsURL: '',
@@ -73,9 +75,17 @@ L.GBFS = L.Layer.extend({
         });
       });
 
+      const icon = new L.Icon({
+        iconSize: [32, 32],
+        popupAnchor: [0, -20],
+        iconUrl,
+      });
+
       freeBikeStatus.data.bikes.forEach((bike) => {
         const point = L.latLng(bike.lat, bike.lon);
-        const marker = new L.Marker(point, {});
+        const marker = new L.Marker(point, {
+          icon,
+        });
         marker.addTo(this.container);
       });
     } catch (err) {
