@@ -2,12 +2,13 @@
     background-image: url('./images/bike_icon.png');
 }
 .station-icon-inner {
-	background: white;
-    width: 20px;
-    height: 20px;
+	background: #8C2BF2;
+	color: white;
+    width: 26px;
+    height: 26px;
     text-align: center;
-    line-height: 20px;
-	border-radius: 10px;
+    line-height: 26px;
+	border-radius: 13px;
 	font-weight: bold;
 	position: relative;
 	top: 3px;
@@ -21,12 +22,12 @@
 		linear-gradient(126deg, transparent 50%, white 50%),
 		linear-gradient(90deg, white 50%, transparent 50%);*/
 	
-	width: 26px;
-	height: 26px;
-	border-radius: 13px;
+	width: 32px;
+	height: 32px;
+	border-radius: 16px;
 }
 
 .station-icon-empty {
-	background: white;
-	color: silver;
+	background: rgba(140, 43, 242, 0.5);
+	
 }

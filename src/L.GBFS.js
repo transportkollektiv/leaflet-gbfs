@@ -1,4 +1,4 @@
-// import './L.GBFS.css';
+import './L.GBFS.css';
 
 const iconUrl = require('./images/bike_icon.png');
 
@@ -9,8 +9,8 @@ L.GBFS = L.Layer.extend({
     start: true,
     interval: 60 * 1000,
     onlyRunWhenAdded: false,
-    bikeMarkerColor: 'rgb(87, 162, 255)',
-    bikeMarkerBgColor: 'white',
+    bikeMarkerColor: 'white',
+    bikeMarkerBgColor: 'silver',
     showStationPopup: true,
     showBikePopup: true,
   },
@@ -75,9 +75,9 @@ L.GBFS = L.Layer.extend({
           if ((status.station_id === station.station_id) && status.is_installed) {
             const icon = new L.DivIcon({
               html: this.getStationIconHtml(status.num_bikes_available, status.num_docks_available),
-              bgPos: [13, 13],
-              iconSize: [26, 26],
-              popupAnchor: [0, -17],
+              bgPos: [16, 16],
+              iconSize: [32, 32],
+              popupAnchor: [0, -21],
               className: 'station-icon',
             });
             const point = L.latLng(station.lat, station.lon);
