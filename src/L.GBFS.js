@@ -99,6 +99,7 @@ L.GBFS = L.Layer.extend({
         const marker = new L.Marker(point, {
           icon,
         });
+        marker.bindPopup(`Bike: <b>${bike.bike_id}</b>`);
         marker.addTo(this.container);
       });
     } catch (err) {
