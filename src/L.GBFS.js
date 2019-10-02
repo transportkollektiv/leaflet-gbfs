@@ -11,6 +11,8 @@ L.GBFS = L.Layer.extend({
     onlyRunWhenAdded: false,
     bikeMarkerColor: 'rgb(87, 162, 255)',
     bikeMarkerBgColor: 'white',
+    showStationPopup: true,
+    showBikePopup: true,
   },
 
   initialize(options) {
@@ -82,7 +84,9 @@ L.GBFS = L.Layer.extend({
             const marker = new L.Marker(point, {
               icon,
             });
-            marker.bindPopup(`<b>${station.name}</b><br>Available bikes: <b>${status.num_bikes_available}</b>`);
+            if (this.options.showStationPopup) {
+              marker.bindPopup(`<b>${station.name}</b><br>Available bikes: <b>${status.num_bikes_available}</b>`);
+            }
             marker.addTo(this.container);
           }
         });
@@ -99,7 +103,9 @@ L.GBFS = L.Layer.extend({
         const marker = new L.Marker(point, {
           icon,
         });
-        marker.bindPopup(`Bike: <b>${bike.bike_id}</b>`);
+        if (this.options.showBikePopup) {
+          marker.bindPopup(`Bike: <b>${bike.bike_id}</b>`);
+        }
         marker.addTo(this.container);
       });
     } catch (err) {
