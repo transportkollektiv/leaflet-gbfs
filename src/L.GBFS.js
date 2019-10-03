@@ -168,4 +168,4 @@ L.GBFS = L.Layer.extend({
   },
 });
 
-module.exports = L.GBFS;
+export default L.GBFS;
