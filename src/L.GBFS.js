@@ -25,22 +25,27 @@ L.GBFS = L.Layer.extend({
   },
 
   async start() {
-    const gbfsResponse = await fetch(this.options.gbfsURL);
-    const gbfs = await gbfsResponse.json();
-    if (!Object.prototype.hasOwnProperty.call(gbfs.data, this.options.language)) {
-      throw new Error(`defined language (${this.options.language}) missing in gbfs file`);
-    }
+    try {
+      const gbfsResponse = await fetch(this.options.gbfsURL);
+      const gbfs = await gbfsResponse.json();
+      if (!Object.prototype.hasOwnProperty.call(gbfs.data, this.options.language)) {
+        throw new Error(`defined language (${this.options.language}) missing in gbfs file`);
+      }
 
-    const feeds = gbfs.data[this.options.language].feeds;
-    const stationInformation = feeds.find((el) => el.name === 'station_information');
-    const stationStatus = feeds.find((el) => el.name === 'station_status');
-    const freeBikeStatus = feeds.find((el) => el.name === 'free_bike_status');
+      const feeds = gbfs.data[this.options.language].feeds;
+      const stationInformation = feeds.find((el) => el.name === 'station_information');
+      const stationStatus = feeds.find((el) => el.name === 'station_status');
+      const freeBikeStatus = feeds.find((el) => el.name === 'free_bike_status');
 
-    this.feeds = { stationInformation, stationStatus, freeBikeStatus };
+      this.feeds = { stationInformation, stationStatus, freeBikeStatus };
 
-    if (!this.timer) {
-      this.timer = setInterval(() => this.update(), this.options.interval);
-      this.update();
+      if (!this.timer) {
+        this.timer = setInterval(() => this.update(), this.options.interval);
+        this.update();
+      }
+    } catch (err) {
+      console.warn(err);
+      this.fire('error', { error: err });
     }
 
     return this;
