@@ -65,6 +65,9 @@ L.GBFS = L.Layer.extend({
   },
 
   async update() {
+    if (typeof this.feeds === "undefined") {
+      return this;
+    }
     try {
       const stationInformationResponse = await fetch(this.feeds.stationInformation.url);
       const stations = await stationInformationResponse.json();
