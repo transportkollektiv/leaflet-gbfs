@@ -121,7 +121,7 @@ L.GBFS = L.Layer.extend({
           icon,
         });
         if (this.options.showBikePopup) {
-          marker.bindPopup(`Bike: <b>${bike.bike_id}</b>`);
+          marker.bindPopup('Bike available');
         }
         marker.addTo(this.container);
       });
