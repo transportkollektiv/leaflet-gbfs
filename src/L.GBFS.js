@@ -5,7 +5,7 @@ const iconUrl = require('./images/bike_icon.png');
 L.GBFS = L.Layer.extend({
   options: {
     gbfsURL: '',
-    language: 'en',
+    language: null,
     start: true,
     interval: 60 * 1000,
     onlyRunWhenAdded: false,
@@ -28,8 +28,17 @@ L.GBFS = L.Layer.extend({
     try {
       const gbfsResponse = await fetch(this.options.gbfsURL);
       const gbfs = await gbfsResponse.json();
-      if (!Object.prototype.hasOwnProperty.call(gbfs.data, this.options.language)) {
-        throw new Error(`defined language (${this.options.language}) missing in gbfs file`);
+      if (this.options.language) {
+        if (!Object.prototype.hasOwnProperty.call(gbfs.data, this.options.language)) {
+          throw new Error(`defined language (${this.options.language}) missing in gbfs file`);
+        }
+      } else {
+        const languages = Object.keys(gbfs.data);
+        if (languages.length === 0) {
+          throw new Error('GBFS has no languages defined');
+        } else {
+          this.options.language = languages[0];
+        }
       }
 
       const feeds = gbfs.data[this.options.language].feeds;
@@ -65,7 +74,7 @@ L.GBFS = L.Layer.extend({
   },
 
   async update() {
-    if (typeof this.feeds === "undefined") {
+    if (typeof this.feeds === 'undefined') {
       return this;
     }
     try {
