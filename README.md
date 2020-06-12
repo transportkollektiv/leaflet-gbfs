@@ -8,7 +8,7 @@ Still work in progress...
 
 ```bash
 $ git clone https://github.com/stadtulm/leaflet-gbfs
-$ cd gbfsmap
+$ cd leaflet-gbfs
 $ npm install
 $ npm run build
 ```
