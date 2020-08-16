@@ -1,20 +1,33 @@
 {
   "name": "leaflet-gbfs",
   "version": "1.1.0",
-  "description": "Show gbfs data in Leaflet",
-  "main": "src/L.GBFS.js",
+  "description": "Show gbfs data as Leaflet layer",
+  "source": "src/L.GBFS.js",
+  "main": "dist/L.GBFS.js",
+  "module": "dist/L.GBFS.esm.js",
+  "esmodule": "dist/L.GBFS.esm.js",
   "directories": {
     "example": "examples",
-    "dist": "dist"
+    "dist": "dist",
+    "lib": "src"
   },
+  "files": [
+    "dist",
+    "dist/*.js",
+    "dist/*.css"
+  ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/stadtulm/leaflet-gbfs.git"
+    "url": "https://github.com/stadtulm/leaflet-gbfs.git"
+  },
+  "syntax": {
+    "esmodules": "gbfs.esm.js"
   },
   "scripts": {
-    "dev": "parcel watch src/L.GBFS.js --global L.GBFS --public-url ../dist/",
-    "build": "parcel build src/L.GBFS.js --global L.GBFS --public-url .",
-    "lint": "./node_modules/.bin/eslint --ignore-path .gitignore ."
+    "dev": "microbundle watch --globals leaflet=L --css-modules true -f modern,iife --name L.GBFS --no-compress",
+    "build": "microbundle build --globals leaflet=L --css-modules true -f modern,iife --name L.GBFS",
+    "lint": "./node_modules/.bin/eslint --ignore-path .gitignore .",
+    "release": "npm run build && cp src/*.css dist/ && npm publish --access public"
   },
   "keywords": [
     "leaflet",
@@ -26,15 +39,21 @@
   },
   "homepage": "https://github.com/stadtulm/leaflet-gbfs",
   "devDependencies": {
-    "eslint": "^6.4.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
     "leaflet": "^1.5.1",
-    "lint-staged": "^9.2.5",
-    "parcel-bundler": "^1.12.4",
+    "lint-staged": "^9.5.0",
+    "microbundle": "0.12.3",
     "yorkie": "^2.0.0"
   },
   "dependencies": {},
+  "peerDependencies": {
+    "leaflet": "1.5"
+  },
+  "externals": {
+    "leaflet": "L"
+  },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
