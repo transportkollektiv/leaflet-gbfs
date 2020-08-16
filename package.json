@@ -1,6 +1,6 @@
 {
   "name": "leaflet-gbfs",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Show gbfs data as Leaflet layer",
   "source": "src/L.GBFS.js",
   "main": "dist/L.GBFS.js",
