@@ -1,8 +1,12 @@
 import './L.GBFS.css';
 
+import {
+  Layer, GeoJSON, Marker, Icon, DivIcon, LatLng, setOptions,
+} from 'leaflet';
+
 const iconUrl = require('./images/bike_icon.png');
 
-L.GBFS = L.Layer.extend({
+const GBFS = Layer.extend({
   options: {
     gbfsURL: '',
     language: null,
@@ -16,8 +20,8 @@ L.GBFS = L.Layer.extend({
   },
 
   initialize(options) {
-    L.setOptions(this, options);
-    this.container = L.geoJson(null, options);
+    setOptions(this, options);
+    this.container = new GeoJSON(null, options);
 
     if (this.options.start && !this.options.onlyRunWhenAdded) {
       this.start();
@@ -90,15 +94,15 @@ L.GBFS = L.Layer.extend({
       stations.data.stations.forEach((station) => {
         stationStatus.data.stations.forEach((status) => {
           if ((status.station_id === station.station_id) && status.is_installed) {
-            const icon = new L.DivIcon({
+            const icon = new DivIcon({
               html: this.getStationIconHtml(status.num_bikes_available, status.num_docks_available),
               bgPos: [16, 16],
               iconSize: [32, 32],
               popupAnchor: [0, -21],
               className: 'station-icon',
             });
-            const point = L.latLng(station.lat, station.lon);
-            const marker = new L.Marker(point, {
+            const point = new LatLng(station.lat, station.lon);
+            const marker = new Marker(point, {
               icon,
             });
             if (this.options.showStationPopup) {
@@ -109,15 +113,15 @@ L.GBFS = L.Layer.extend({
         });
       });
 
-      const icon = new L.Icon({
+      const icon = new Icon({
         iconSize: [32, 32],
         popupAnchor: [0, -20],
         iconUrl,
       });
 
       freeBikeStatus.data.bikes.forEach((bike) => {
-        const point = L.latLng(bike.lat, bike.lon);
-        const marker = new L.Marker(point, {
+        const point = new LatLng(bike.lat, bike.lon);
+        const marker = new Marker(point, {
           icon,
         });
         if (this.options.showBikePopup) {
@@ -185,4 +189,4 @@ L.GBFS = L.Layer.extend({
   },
 });
 
-export default L.GBFS;
+export default GBFS;
