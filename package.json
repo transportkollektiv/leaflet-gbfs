@@ -10,9 +10,7 @@
     "example": "examples"
   },
   "files": [
-    "dist",
-    "dist/*.js",
-    "dist/*.css"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -25,7 +23,7 @@
     "dev": "microbundle watch --globals leaflet=L --css-modules true -f modern,iife --name L.GBFS --no-compress",
     "build": "microbundle build --globals leaflet=L --css-modules true -f modern,iife --name L.GBFS",
     "lint": "eslint --ignore-path .gitignore .",
-    "release": "npm run build && cp src/*.css dist/ && npm publish --access public"
+    "release": "npm run build && cp src/*.css dist/ && cp -r src/images dist/ && npm publish"
   },
   "keywords": [
     "leaflet",
