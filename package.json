@@ -1,5 +1,5 @@
 {
-  "name": "leaflet-gbfs",
+  "name": "@stadtulm/leaflet-gbfs",
   "version": "1.2.0",
   "description": "Show gbfs data as Leaflet layer",
   "source": "src/L.GBFS.js",
@@ -7,9 +7,7 @@
   "module": "dist/L.GBFS.esm.js",
   "esmodule": "dist/L.GBFS.esm.js",
   "directories": {
-    "example": "examples",
-    "dist": "dist",
-    "lib": "src"
+    "example": "examples"
   },
   "files": [
     "dist",
@@ -18,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/stadtulm/leaflet-gbfs.git"
+    "url": "git+https://github.com/stadtulm/leaflet-gbfs.git"
   },
   "syntax": {
     "esmodules": "gbfs.esm.js"
@@ -26,7 +24,7 @@
   "scripts": {
     "dev": "microbundle watch --globals leaflet=L --css-modules true -f modern,iife --name L.GBFS --no-compress",
     "build": "microbundle build --globals leaflet=L --css-modules true -f modern,iife --name L.GBFS",
-    "lint": "./node_modules/.bin/eslint --ignore-path .gitignore .",
+    "lint": "eslint --ignore-path .gitignore .",
     "release": "npm run build && cp src/*.css dist/ && npm publish --access public"
   },
   "keywords": [
