@@ -129,6 +129,9 @@ const GBFS = Layer.extend({
         }
         marker.addTo(this.container);
       });
+
+      const dataUpdate = { stations, stationStatus, freeBikeStatus };
+      this.fire('data', dataUpdate);
     } catch (err) {
       console.warn(err);
       this.fire('error', { error: err });
