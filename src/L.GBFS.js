@@ -22,6 +22,7 @@ const GBFS = Layer.extend({
   initialize(options) {
     setOptions(this, options);
     this.container = new GeoJSON(null, options);
+    this.updating = false;
 
     if (this.options.start && !this.options.onlyRunWhenAdded) {
       this.start();
@@ -80,11 +81,16 @@ const GBFS = Layer.extend({
     return this.timer !== undefined;
   },
 
+  isUpdating() {
+    return this.updating;
+  },
+
   async update() {
     if (typeof this.feeds === 'undefined') {
       return this;
     }
     try {
+      this.updating = true;
       const stationInformationResponse = await fetch(this.feeds.stationInformation.url);
       const stations = await stationInformationResponse.json();
       const stationStatusResponse = await fetch(this.feeds.stationStatus.url);
@@ -144,10 +150,12 @@ const GBFS = Layer.extend({
       if (typeof vehicleTypes !== 'undefined') dataUpdate.vehicleTypes = vehicleTypes;
       this.fire('data', dataUpdate);
     } catch (err) {
+      this.updating = false;
       console.warn(err);
       this.fire('error', { error: err });
     }
 
+    this.updating = false;
     return this;
   },
 
