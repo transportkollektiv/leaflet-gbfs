@@ -49,8 +49,11 @@ const GBFS = Layer.extend({
       const stationInformation = feeds.find((el) => el.name === 'station_information');
       const stationStatus = feeds.find((el) => el.name === 'station_status');
       const freeBikeStatus = feeds.find((el) => el.name === 'free_bike_status');
+      const vehicleTypes = feeds.find((el) => el.name === 'vehicle_types');
 
-      this.feeds = { stationInformation, stationStatus, freeBikeStatus };
+      this.feeds = {
+        stationInformation, stationStatus, freeBikeStatus, vehicleTypes,
+      };
 
       if (!this.timer) {
         this.timer = setInterval(() => this.update(), this.options.interval);
@@ -88,6 +91,11 @@ const GBFS = Layer.extend({
       const stationStatus = await stationStatusResponse.json();
       const freeBikeStatusResponse = await fetch(this.feeds.freeBikeStatus.url);
       const freeBikeStatus = await freeBikeStatusResponse.json();
+      let vehicleTypes;
+      if (typeof this.feeds.vehicleTypes !== 'undefined') {
+        const vehicleTypesResponse = await fetch(this.feeds.vehicleTypes.url);
+        vehicleTypes = await vehicleTypesResponse.json();
+      }
 
       this.container.clearLayers();
 
@@ -131,6 +139,7 @@ const GBFS = Layer.extend({
       });
 
       const dataUpdate = { stations, stationStatus, freeBikeStatus };
+      if (typeof vehicleTypes !== 'undefined') dataUpdate.vehicleTypes = vehicleTypes;
       this.fire('data', dataUpdate);
     } catch (err) {
       console.warn(err);
