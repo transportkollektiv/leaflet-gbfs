@@ -116,6 +116,7 @@ const GBFS = Layer.extend({
             if (this.options.showStationPopup) {
               marker.bindPopup(`<b>${station.name}</b><br>Available bikes: <b>${status.num_bikes_available}</b>`);
             }
+            marker.on('click', (e) => this.fire('stationClick', { event: e, station, status }));
             marker.addTo(this.container);
           }
         });
@@ -135,6 +136,7 @@ const GBFS = Layer.extend({
         if (this.options.showBikePopup) {
           marker.bindPopup('Bike available');
         }
+        marker.on('click', (e) => this.fire('bikeClick', { event: e, bike }));
         marker.addTo(this.container);
       });
 
