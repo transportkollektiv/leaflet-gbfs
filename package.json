@@ -1,6 +1,6 @@
 {
   "name": "@stadtulm/leaflet-gbfs",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Show gbfs data as Leaflet layer",
   "source": "src/L.GBFS.js",
   "main": "dist/L.GBFS.js",
